@@ -3,13 +3,15 @@ package common;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class Exam {
+	public List<?> doSelect(){ // <?> 물음표는 아무거나 써도 
+		return null;
+	}
 
 	public List<String> getUserIDLists(String name) {
 		// String result = "";
@@ -18,11 +20,14 @@ public class Exam {
 			Connection con = DBConn2.getCon();
 			String sql = "select * from user";
 			if (!name.equals("")) {
-				sql += " where name = '" + name + "'";
+				sql += " where name = ?";
 			}
 			PreparedStatement prestmt = con.prepareStatement(sql); // sql 하얀 화면
 																	// //나와 연결한
 																	// con과 통화
+			if (!name.equals("")) {
+				prestmt.setString(1, name);
+			}
 			ResultSet rs = prestmt.executeQuery(); // F9나온 상태. 나오기 전. 나온걸 rs에 저장
 			while (rs.next()) {
 				userlist.add(rs.getString(1) + ',' + rs.getString(2) + ',' + rs.getString(3) + ',' + rs.getString(4)+ ',' + rs.getString(5)); // 0번째가
@@ -49,8 +54,13 @@ public class Exam {
 			valueHm.put("age", scan.nextLine());
 			
 			Connection con = DBConn2.getCon();
-			String sql = "insert into user(id, pwd, name, age)values('"+valueHm.get("id")+"','"+valueHm.get("pwd")+"','"+valueHm.get("name")+"','"+Integer.parseInt(valueHm.get("age"))+"')"; // 입력할거야
+			String sql = "insert into user(id, pwd, name, age)values(?,?,?,?)"; // 입력할거야
 			PreparedStatement prestmt = con.prepareStatement(sql);
+			prestmt.setString(1,valueHm.get("id"));
+			prestmt.setString(2,valueHm.get("pwd"));
+			prestmt.setString(3,valueHm.get("name"));
+			prestmt.setString(4,valueHm.get("age"));
+			
 			int result = prestmt.executeUpdate(); // 몇개의 로우에 영향을 미치나? -> 하나. ->
 													// result = 1;
 			DBConn2.closeCon();
@@ -85,7 +95,7 @@ public class Exam {
 			System.out.println("유저에 들어갔다");
 		}
 		
-		boolean isDel = e.deleteUser(1);
+		boolean isDel = e.deleteUser(21);
 		if (isDel) {
 			System.out.println("삭제되었다");
 			
