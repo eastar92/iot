@@ -78,7 +78,7 @@ public class UserDAO {
 
 		sql = "insert into user_info(id, pwd, name, age,class_num) values  (?,?,?,?,?);";
 		userList = ud.doInsert(sql);
-		for(int i = 0; i <= userList.size(); i++){
+		for(int i = 0; i < userList.size(); i++){
 			System.out.println(userList.get(i));
 		}
 	}
