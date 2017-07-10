@@ -17,7 +17,18 @@ public class UserServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
+
+		String name1 = req.getParameter("name");
+		String pwd1 = req.getParameter("pass");
+		String op1 = req.getParameter("op");
+		String id1 = req.getParameter("id");
+		String pw1 = req.getParameter("pwd");
+		System.out.println("input html에서 너님이 던진 값 => " + id1 + "," + pw1);
+
 		String command = req.getParameter("command");
+		if (command == null) {
+			return;
+		}
 		UserService us = new UserService();
 
 		if (command.equals("SIGNIN")) {
@@ -52,11 +63,10 @@ public class UserServlet extends HttpServlet {
 		} else if (command.equals("UPDATE")) {
 			String user_num = req.getParameter("user_num");
 			System.out.println("업데이트 할 번호 : " + user_num);
-		/*	if (us.deleteUser(user_num)) {
-				doProcess(resq, "삭제됨");
-			} else {
-				doProcess(resq, "삭제안됨");
-			}*/
+			/*
+			 * if (us.deleteUser(user_num)) { doProcess(resq, "삭제됨"); } else {
+			 * doProcess(resq, "삭제안됨"); }
+			 */
 			String name = req.getParameter("name");
 			String class_num = req.getParameter("class_num");
 			String age = req.getParameter("age");
