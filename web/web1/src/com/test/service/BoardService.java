@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import com.test.common.DBConn2;
 
-public class UserService {
+public class BoardService {
 	Connection con = null;
 	PreparedStatement ps = null;
 
@@ -15,15 +15,13 @@ public class UserService {
 
 		try {
 			con = DBConn2.getCon();
-			String sql = "insert into user_info(user_id, user_pwd, user_name, class_name,age)";
-			sql += "values(?,?,?,?,?)";
+			String sql = "insert into board(title, content, writer)";
+			sql += "values(?,?,?)";
 
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("class_num"));
-			ps.setString(5, hm.get("age"));
+			ps.setString(1, hm.get("title"));
+			ps.setString(2, hm.get("content"));
+			ps.setString(3, hm.get("writer"));
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
@@ -44,12 +42,12 @@ public class UserService {
 		return false;
 	}
 
-	public boolean deleteUser(String user_num) {
+	public boolean deleteUser(String writer) {
 		try {
-			String sql = "delete from user_info where num = ?";
 			con = DBConn2.getCon();
+			String sql = ("delete from board where num ="+writer);
 			ps = con.prepareStatement(sql);
-			ps.setString(1, user_num);
+			ps.setString(1, writer);
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -59,7 +57,7 @@ public class UserService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -72,12 +70,11 @@ public class UserService {
 		return false;
 	}
 
-	public boolean updateUser() {
+	public boolean updateUser(String user_num) {
 		try {
-			String sql = "update user_info set user_name = '홍길동' where num = 1";
+			String sql = "update board set user_name = '홍길동' where num = 1";
 			con = DBConn2.getCon();
-			ps = con.prepareStatement(sql);
-			// ps.setString();
+			ps = con.prepareStatement(sql); // ps.setString();
 
 			int result = ps.executeUpdate();
 			if (result == 1) {
@@ -100,4 +97,5 @@ public class UserService {
 		return false;
 
 	}
+
 }
