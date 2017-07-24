@@ -18,15 +18,17 @@ public class UserService_A {
 		PreparedStatement ps = null;
 		try {
 			con = DBConn2.getCon();
-			String sql = "insert into user_info(user_id, user_pwd, user_name, class_num, age)";
-			sql += " values(?,?,?,?,?)";
-
+			String sql = "insert into user_info(userid, userpwd, username, address,hp1,hp2,hp3,age)";
+			sql += "values(?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("class_num"));
-			ps.setString(5, hm.get("age"));
+			ps.setString(1, hm.get("userid"));
+			ps.setString(2, hm.get("userpwd"));
+			ps.setString(3, hm.get("username"));
+			ps.setString(4, hm.get("address"));
+			ps.setString(5, hm.get("hp1"));
+			ps.setString(6, hm.get("hp2"));
+			ps.setString(7, hm.get("hp3"));
+			ps.setString(8, hm.get("age"));
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
@@ -75,6 +77,32 @@ public class UserService_A {
 			}
 		}
 		return false;
+	}
+
+	public String checkPwd(String pwd1, String pwd2) {
+		if (pwd1.equals(pwd2)) {
+			return "로그인 성공";
+		}
+		return "비밀번호 틀림";
+	}
+
+	public String loginUser(HashMap<String, String> hm) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = DBConn2.getCon();
+			String sql = "select userpwd from user_info where userid= ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, hm.get("userid"));
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String userpwd = rs.getString("userpwd");
+				return checkPwd(userpwd, hm.get("userpwd"));
+			}
+		} catch (Exception e) {
+
+		}
+		return "그런 아이디 없다";
 	}
 
 	public List<Map> selectUser(HashMap<String, String> hm) {

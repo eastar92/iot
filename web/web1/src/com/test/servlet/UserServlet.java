@@ -2,13 +2,16 @@ package com.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.test.dto.UserInfo;
 import com.test.service.UserService;
 
 public class UserServlet extends HttpServlet {
@@ -18,68 +21,111 @@ public class UserServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 
-		String name1 = req.getParameter("name");
-		String pwd1 = req.getParameter("pass");
-		String op1 = req.getParameter("op");
-		String id1 = req.getParameter("id");
-		String pw1 = req.getParameter("pwd");
-		System.out.println("input html에서 너님이 던진 값 => " + id1 + "," + pw1);
+		// String name1 = req.getParameter("name");
+		// String pwd1 = req.getParameter("pass");
+		// String op1 = req.getParameter("op");
+		// String id1 = req.getParameter("id");
+		// String pw1 = req.getParameter("pwd");
+		// System.out.println("input html에서 너님이 던진 값 => " + id1 + "," + pw1);
+
+		Map<String, String[]> reqMap = req.getParameterMap();
+		System.out.println(reqMap);
+		Iterator<String> it = reqMap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+		}
+
+		String userNum = req.getParameter("usernum");
+		String userId = req.getParameter("userid");
+		String userPwd = req.getParameter("userpwd");
+		String userName = req.getParameter("username");
+		String address = req.getParameter("address");
+		String hp1 = req.getParameter("hp1");
+		String hp2 = req.getParameter("hp2");
+		String hp3 = req.getParameter("hp3");
+		String age = req.getParameter("age");
+		UserInfo ui = new UserInfo();
+		if (userNum != null) {
+			ui.setUserNum(Integer.parseInt(userNum));
+		}
+		ui.setUserId(userId);
+		ui.setUserPwd(userPwd);
+		ui.setUserName(userName);
+		ui.setAddress(address);
+		ui.setHp1(hp1);
+		ui.setHp2(hp2);
+		ui.setHp3(hp3);
+		if (age != null) {
+			ui.setAge(Integer.parseInt(age));
+		}
 
 		String command = req.getParameter("command");
 		if (command == null) {
 			return;
 		}
+
 		UserService us = new UserService();
+		if (command.equals("LOGIN")) {
+			String result = us.loginUser(ui);
+			doProcess(resq, result);
+		} else if (command.equals("SIGNIN")) {
+			/*
+			 * String userId = req.getParameter("userid"); String userPwd =
+			 * req.getParameter("userPwd"); String userName =
+			 * req.getParameter("userName"); String address =
+			 * req.getParameter("address"); String hp1 =
+			 * req.getParameter("hp1"); String hp2 = req.getParameter("hp2");
+			 * String hp3 = req.getParameter("hp3"); String age =
+			 * req.getParameter("age"); HashMap hm = new HashMap();
+			 * hm.put("userId", userId); hm.put("userPwd", userPwd);
+			 * hm.put("userName", userName); hm.put("address", address);
+			 * hm.put("hp1", hp1); hm.put("hp2", hp2); hm.put("hp3", hp3);
+			 * hm.put("age", age);
+			 */
 
-		if (command.equals("SIGNIN")) {
-			String id = req.getParameter("id");
-			String pwd = req.getParameter("pwd");
-			String name = req.getParameter("name");
-			String class_num = req.getParameter("class_num");
-			String age = req.getParameter("age");
-
-			System.out.println(id + "," + pwd + "," + name + "," + class_num + ", " + age);
-
-			HashMap hm = new HashMap();
-			hm.put("id", id);
-			hm.put("pwd", pwd);
-			hm.put("name", name);
-			hm.put("class_num", class_num);
-			hm.put("age", age);
-
-			if (us.insertUser(hm)) {
-				doProcess(resq, "저장 잘 됨");
+			if (us.insertUser(ui)) {
+				doProcess(resq, "저장 잘 됐다");
 			} else {
-				doProcess(resq, "다시 입력해");
+				doProcess(resq, "값 다시 입력");
 			}
 		} else if (command.equals("DELETE")) {
-			String user_num = req.getParameter("user_num");
-			System.out.println("삭제할 번호 : " + user_num);
-			if (us.deleteUser(user_num)) {
-				doProcess(resq, "삭제됨");
+			boolean isDelete = us.deleteUser(ui);
+			String result = "";
+			if (isDelete) {
+				result = "삭제됨";
 			} else {
-				doProcess(resq, "삭제안됨");
+				result = "삭제안됨";
 			}
+			doProcess(resq, result);
 		} else if (command.equals("UPDATE")) {
-			String user_num = req.getParameter("user_num");
-			System.out.println("업데이트 할 번호 : " + user_num);
-			/*
-			 * if (us.deleteUser(user_num)) { doProcess(resq, "삭제됨"); } else {
-			 * doProcess(resq, "삭제안됨"); }
-			 */
-			String name = req.getParameter("name");
-			String class_num = req.getParameter("class_num");
-			String age = req.getParameter("age");
+			boolean isUpdate = us.updateUser(ui);
+			String result = "";
+			if (isUpdate) {
+				result = "수정됨";
+			} else {
+				result = "수정안됨";
+			}
+			doProcess(resq, result);
 
-			HashMap hm = new HashMap();
-			hm.put("name", name);
-			hm.put("class_num", class_num);
-			hm.put("age", age);
+		} else if (command.equals("SELECT")) {
+			System.out.println("이름  :" + userName);
+			if (userName != null && !userName.equals("")) {
+				ui.setUserName("%" + userName + "%");
+			}
+			List<UserInfo> userList = us.selectUser(ui);
+			String result = "번호{/}이름{/}아이디{/}나이{+}";
+			result += "dis{/}en{/}en{/}en{+}";
+			for (UserInfo ui2 : userList) {
+				result += ui2.getUserNum() + "{/}" + ui2.getUserName() + "{/}" + ui2.getUserId() + "{/}" + ui2.getAge()
+						+ "{+}";
+			}
+			result = result.substring(0, result.length() - 3);
+			doProcess(resq, result);
 		}
 	}
 
 	public void dePost(HttpServletRequest req, HttpServletResponse reqs) throws IOException {
-
+		System.out.println("1");
 	}
 
 	public void doProcess(HttpServletResponse resq, String writeStr) throws IOException {

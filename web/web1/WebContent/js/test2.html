@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+
+	function searchFather(eObj) {
+		var maxNum = eObj.form.elements.length;
+		var result = "";
+		for (var i = 0; i < maxNum; i++) {
+			var fObj = eObj.form.elements[i];
+
+			if (fObj.value != "전송") {
+				if (i % 2 != 0 && fObj.value != 0) {
+					alert("홀수 입력하세요");
+					fObj.value = "";
+					fObj.focus();
+					return false;
+				}
+				result += fObj.value;
+			}
+			if (i == maxNum - 1) {
+				fObj.value = result;
+			}
+		}
+		return false;
+	}
+</script>
+<body>
+	<form onsubmit="checkForm(this)" action="test2.html">
+		<input type="text" /> <br /> <input type="text" /> <br /> <input
+			type="text" /> <br /> <input type="text" /> <br /> <input
+			type="text" /> <br /> <input type="text" /> <br /> <input
+			type="button" value="전송" onclick="searchFather(this)" />
+		<textarea></textarea>
+	</form>
+</body>
+</html>
