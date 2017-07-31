@@ -2,18 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%
-String test1 = request.getParameter("test1");
+String test1 = request.getParameter("id");
 out.println("입력하신 test1 의 값은 1 입니다.<br/>");
 
-String test2 = request.getParameter("test2");
-String test3 = request.getParameter("test3");
-String test4 = request.getParameter("test4");
-String test5 = request.getParameter("test5");
-String test6 = request.getParameter("test6");
-String test7 = request.getParameter("test7");
-String test8 = request.getParameter("test8");
-String test9 = request.getParameter("test9");
-String test10 = request.getParameter("test10");
+String test2 = request.getParameter("name");
+String test3 = request.getParameter("age");
+String test4 = request.getParameter("address");
+String test5 = request.getParameter("address2");
+String test6 = request.getParameter("hp1");
+String test7 = request.getParameter("hp2");
+String test8 = request.getParameter("hp3");
+String test9 = request.getParameter("zipcode");
+String test10 = request.getParameter("password");
 
 Map<String, String[]> map = request.getParameterMap();
 Iterator<String> it = map.keySet().iterator();

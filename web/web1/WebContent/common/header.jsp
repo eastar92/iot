@@ -57,7 +57,7 @@ function doMovePage(pageId){
 	if(pageId=="board"){
 		url += "/board/board_select.jsp";
 	}else if(pageId =="main"){
-		url +=  "/";
+		url +=  "/main.jsp";
 	}else if(pageId=="insertBoard"){
 			url += "/board/board_insert.jsp";
 	}

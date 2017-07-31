@@ -8,16 +8,16 @@
 </head>
 <body>
 <form action="exam01_ok.jsp">
-<input type="text" name="test1" id="test1"/><br/>
-<input type="text" name="test2" id="test2"/><br/>
-<input type="text" name="test3" id="test3"/><br/>
-<input type="text" name="test4" id="test4"/><br/>
-<input type="text" name="test5" id="test5"/><br/>
-<input type="text" name="test6" id="test6"/><br/>
-<input type="text" name="test7" id="test7"/><br/>
-<input type="text" name="test8" id="test8"/><br/>
-<input type="text" name="test9" id="test9"/><br/>
-<input type="text" name="test10" id="test10"/><br/>
+<input type="text" name="id" id="id"/><br/>
+<input type="text" name="name" id="name"/><br/>
+<input type="text" name="age" id="age"/><br/>
+<input type="text" name="address" id="address"/><br/>
+<input type="text" name="address2" id="address2"/><br/>
+<input type="text" name="hp1" id="hp1"/><br/>
+<input type="text" name="hp2" id="hp2"/><br/>
+<input type="text" name="hp3" id="hp3"/><br/>
+<input type="text" name="zipcode" id="zipcode"/><br/>
+<input type="text" name="password" id="password"/><br/>
 <input type="button" value="값확인" onclick="doCheckValue()"/>
 </form>
 <script>
@@ -41,7 +41,7 @@ var AjaxUtil = function(p_url, params){
    		if (this.readyState==4){
    			if(this.status==200){
 	   			var result = decodeURIComponent(this.responseText);
-	   			alert(result);
+	   			document.getElementById("result_div").innerHTML+=result;
    			}
    		}
 	}
@@ -55,20 +55,33 @@ var AjaxUtil = function(p_url, params){
    	}
 } 
 function doCheckValue(){
-	var test1 = document.getElementById("test1").value;
-	var test2 = document.getElementById("test2").value;
-	var test3 = document.getElementById("test3").value;
-	var test4 = document.getElementById("test4").value;
-	var test5 = document.getElementById("test5").value;
-	var test6 = document.getElementById("test6").value;
-	var test7 = document.getElementById("test7").value;
-	var test8 = document.getElementById("test8").value;
-	var test9 = document.getElementById("test9").value;
-	var test10 = document.getElementById("test10").value;
-	var params = "";
-	var au = new AjaxUtil("보낼페이지", params);
+	var id = document.getElementById("id").value;
+	var name = document.getElementById("name").value;
+	var age = document.getElementById("age").value;
+	var address = document.getElementById("address").value;
+	var address2 = document.getElementById("address2").value;
+	var hp1 = document.getElementById("hp1").value;
+	var hp2 = document.getElementById("hp2").value;
+	var hp3 = document.getElementById("hp3").value;
+	var zipcode = document.getElementById("zipcode").value;
+	var password = document.getElementById("password").value;
+	var params = "?";
+	params +="id="+id;
+	params +="&name="+name;
+	params +="&age="+age;
+	params +="&address="+address;
+	params +="&address2="+address2;
+	params +="&hp1="+hp1;
+	params +="&hp2="+hp2;
+	params +="&hp3="+hp3;
+	params +="&zipcode="+zipcode;
+	params +="&password="+password;
+	
+	var au = new AjaxUtil("/test/exam01_ok.jsp", params);
 	au.send();
 }
 </script>
+<div id = "result_div">
+</div>
 </body>
 </html>
