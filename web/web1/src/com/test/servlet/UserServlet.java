@@ -69,19 +69,24 @@ public class UserServlet extends HttpServlet {
 			String result = us.loginUser(ui);
 			doProcess(resq, result);
 		} else if (command.equals("SIGNIN")) {
-			/*
-			 * String userId = req.getParameter("userid"); String userPwd =
-			 * req.getParameter("userPwd"); String userName =
-			 * req.getParameter("userName"); String address =
-			 * req.getParameter("address"); String hp1 =
-			 * req.getParameter("hp1"); String hp2 = req.getParameter("hp2");
-			 * String hp3 = req.getParameter("hp3"); String age =
-			 * req.getParameter("age"); HashMap hm = new HashMap();
-			 * hm.put("userId", userId); hm.put("userPwd", userPwd);
-			 * hm.put("userName", userName); hm.put("address", address);
-			 * hm.put("hp1", hp1); hm.put("hp2", hp2); hm.put("hp3", hp3);
-			 * hm.put("age", age);
-			 */
+
+			userId = req.getParameter("userid");
+			userPwd = req.getParameter("userpwd");
+			userName = req.getParameter("username");
+			address = req.getParameter("address");
+			hp1 = req.getParameter("hp1");
+			hp2 = req.getParameter("hp2");
+			hp3 = req.getParameter("hp3");
+			age = req.getParameter("age");
+			ui = new UserInfo();
+			ui.setUserId(userId);
+			ui.setUserPwd(userPwd);
+			ui.setUserName(userName);
+			ui.setAddress(address);
+			ui.setHp1(hp1);
+			ui.setHp2(hp2);
+			ui.setHp3(hp3);
+			ui.setAge(Integer.parseInt(age));
 
 			if (us.insertUser(ui)) {
 				doProcess(resq, "저장 잘 됐다");

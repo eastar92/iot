@@ -24,13 +24,13 @@ public class UserService {
 
 			ps = con.prepareStatement(sql);
 			ps.setString(1, ui.getUserId());
-			ps.setString(2, ui.getUserName());
-			ps.setInt(3, ui.getAge());
+			ps.setString(2, ui.getUserPwd());
+			ps.setString(3, ui.getUserName());
 			ps.setString(4, ui.getAddress());
 			ps.setString(5, ui.getHp1());
 			ps.setString(6, ui.getHp2());
 			ps.setString(7, ui.getHp3());
-			ps.setString(8, ui.getUserPwd());
+			ps.setInt(8, ui.getAge());
 			int result = ps.executeUpdate();
 			if (result == 1) {
 				con.commit();
