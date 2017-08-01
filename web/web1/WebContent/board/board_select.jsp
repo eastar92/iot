@@ -6,8 +6,6 @@
 <%@ page import="com.test.dto.BoardInfo"%>
 
 <body>
-<jsp:include page="/common/top.jsp" flush="fasle"><jsp:param value = "<%=login%>" name = "login"/></jsp:include>
-
 
  <script>
  function goBoard(biNum,param2){

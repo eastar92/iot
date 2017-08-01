@@ -61,7 +61,6 @@
 	%>
 
 <body>
-	<jsp:include page="/common/top.jsp" flush="false"><jsp:param value = "<%=login%>" name = "login"/></jsp:include>
 <div class="container">
 		<div class="starter-template">
 	<form method="get" action="<%=rootPath%>/board/board_update_ok.jsp">
