@@ -12,7 +12,7 @@
 	 location.href = "<%=rootPath%>/board/board_view.jsp?binum="+biNum;
  }
  </script>
- <div class="container">
+ <div class="container" >
    <div class="starter-template">
 	<%
 		Connection con = null;
@@ -25,7 +25,7 @@
 			ResultSet rs = ps.executeQuery();
 
 			String tableStr = "<table border = '1' class='table table-striped'>";
-			tableStr += "<tr align='center'>";
+			tableStr += "<tr align='center' class='info'>";
 			tableStr += "<td >번호</td>";
 			tableStr += "<td>제목</td>";
 			tableStr += "<td>비밀번호</td>";

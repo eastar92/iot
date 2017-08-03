@@ -14,15 +14,16 @@
 <div class="container">
 		<div class="starter-template">
 	<form method="get" action="<%=rootPath%>/board/board_update_ok.jsp">
-	<table border="1" class='table table bordered table hover'>
-	<tr><td>아이디:</td><td><%=userId%></td>
+	<table align = "center" border="3" class='table-condensed'>
+	<tr><td class="active">아이디:</td><td><%=userId%></td>
 <tr><td>이름:</td><td><%=userName%></td>
 <tr><td>나이:	</td><td><%=age%></td>
 <tr><td>주소:</td><td><%=address%></td>
 <tr><td>전화번호:</td><td><%=hp1%><%=hp2%><%=hp3%></td>
-</table>
+</table> 
 
 
 	</form>
 	</div></div>
 </body>
+ 

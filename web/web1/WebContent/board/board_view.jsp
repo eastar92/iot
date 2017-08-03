@@ -52,7 +52,7 @@ history.back();
 	%>
 	<div class="container">
 		<div class="starter-template">
-			<table border="1" class='table table bordered table hover'>
+			<table align="center" border="3" class='table-condensed'>
 				<tr>
 					<td>번호 :</td>
 					<td><%=binum%></td>
