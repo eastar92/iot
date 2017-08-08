@@ -49,6 +49,8 @@ public void printStr(String str){
 	if(login){
 		loginStr= "로그아웃";
 	}
+	
+	String version = "1.1.1";
 %>
 <script src="<%=rootPath%>/js/jquery-3.2.1.js"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
@@ -59,6 +61,24 @@ public void printStr(String str){
 <link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-table.css"/>
 <link rel="stylesheet" href="<%=rootPath%>/ui/common.css"/>
 <script>
+var sBlockStr = "<li><a>◀◀</a></li>";
+sBlockStr += "<li><a>◀</a></li>";
+var eBlockStr = "<li><a>▶</a></li>";
+eBlockStr += "<li><a>▶▶</a></li>";
+
+function setPagination(sNum, eNum, nPage, objId){
+	var pageStr = sBlockStr;
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
+		}
+	}
+	pageStr += eBlockStr;
+	$("#" + objId).html(pageStr);
+}
+
 var rootPath = "<%=rootPath%>";
 $(document).ready(function(){
 	var nowUrl = "<%=nowUrl%>";
@@ -74,6 +94,29 @@ function doMovePage(pageId){
 			url += "/board/board_insert.jsp";
 	}
 	location.href=url;
+}
+
+function alertOp(){
+	alert($("#op").val());
+}
+function goPage(pParams, pUrl, pCallBackFunc){
+	var params = JSON.stringify(pParams);
+	$.ajax({ 
+    		type     : "POST"
+	    ,   url      : pUrl
+	    ,   dataType : "json" 
+	    ,   beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Accept", "application/json");
+	        xhr.setRequestHeader("Content-Type", "application/json");
+	    }
+	    ,   data     : params
+	    ,   success : pCallBackFunc
+	    ,   error : function(xhr, status, e) {
+		    	alert("에러 : "+e);
+		},
+		complete  : function() {
+		}
+	});
 }
 </script>
 

@@ -43,7 +43,7 @@ $("#btn2").click(function(){
     ,   success : function(result){
        alert(result.msg);
        if(result.login=="ok"){
-    	 location.href = "<%=rootPath%>/main.jsp";  
+    	 location.href = "<%=rootPath%>/test/cal.jsp";  
        }else{
     	   $("#id").val("");
     	   $("#pwd").val("");
